@@ -1,0 +1,64 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  // font awesome
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+  // google fonts
+  link(href='https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans&display=swap' rel='stylesheet')
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/stylesheets/main.css')
+  title Budget App
+.app.bg-brand-light.p-5
+  .w-75.bg-brand.rounded.p-5.mx-auto.text-white
+    // balance
+    .balance.text-center
+      p.m-0 balance
+      h1#budgetBalance.font-weight-bold.m-0 &#x20A6;#{balance}
+    // contents
+    .w-75.mx-auto
+      // income and expense totals
+      .row.mx-0.mt-2
+        // income
+        .col-sm-6.rounded.bg-success
+          h2#incomeTotals.bodyfont.pt-2 &#x20A6;#{income}
+        // expense
+        .col-sm-6.rounded.bg-danger
+          h2#expenseTotals.bodyfont.pt-2 &#x20A6;#{expense}
+      // items
+      ul.bg-dark-brand.items.p-5.mt-2.rounded
+        if budgets.length > 0
+          - let n = 1;
+          each budget in budgets
+            li.item(class=budget.type data-item=budget._id)
+              .row.text-capitalize.mb-3
+                .col-sm-1
+                  span=n++
+                .col-sm-6
+                  span=budget.desc
+                .col-sm-3
+                  span July 25th
+                .col-sm-2
+                  span &#x20A6;#{budget.amount}
+              // edit and delete btns
+              .icons
+                span
+                  - const editPath = `/budget/edit/${budget._id}`
+                  - const deletePath = `/budget/delete/${budget._id}`
+                  a(href=editPath)
+                    i.fa.fa-edit.text-success.mr-2
+                span
+                  a(href=deletePath)
+                    i.fa.fa-trash.text-tomato
+
+        else
+          p You don&apos;t have any budget added to the list.
+      // add btn modal trigger
+      a.m-5.mx-auto.px-5.py-2.btn.text-capitalize.font-weight-bold.btn-success(href='/budget/add') add a budget
+      // edit btn modal trigger
+      a.m-5.mx-auto.px-5.py-2.btn.text-capitalize.font-weight-bold.btn-danger.d-none(href='#editBudgetModal' data-toggle='modal' data-target='#editBudgetModal') edit budget
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+script(src='/javascripts/app.js')
