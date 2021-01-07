@@ -1,0 +1,29 @@
+route => {
+    login user
+    validate user input
+    take user to dashboard after login
+    if the user have budget already save in the db, the data will be send along while redirecting to the dashboard
+    if no budget then the dashboard will contain an empty budget
+    the budget will be the dashboard for each user
+
+    register route{
+        validate user input before saving into the db
+        show a flash message after a successful login and take user back to login
+
+        hash the password before saving into the db
+    }
+    protected route {
+        the dashboard will be a protected route
+        the logout will be a protected route
+        there will be a guard checking if user is login or not before the user will be able to access the dashboard
+        if user has already login, he will be taken to dashboard page else he will be taken to the login page otherwise he will be taken to the register page
+        each login session will be protected
+        a token will be generated after a successful login which is going to expire after 3hours
+        if a token has been destroyed and a user try to access the dashboard, he will be redirected to the login page.
+
+        if a user hit the logout route, the token will be destroyed and he will be redirected to the login page
+
+        no user will be allowed to use an email address or a phone number twice, if a user try to register with an existing email address
+        such email address will be bounce back.
+    }
+}

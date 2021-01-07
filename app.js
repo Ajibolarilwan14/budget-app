@@ -3,13 +3,14 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+// const flash = require("connect-flash");
 
 // setting environmental variables
 require("dotenv").config({ path: "./variables.env" });
 
 // connect to the mongodb database using mongoose
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DB, { useNewUrlParser: true });
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // if there's problem with db connection,
 // log error to the console
@@ -19,6 +20,7 @@ mongoose.connection.on("error", err => {
 
 // import all models
 require("./models/Budget");
+require("./models/User");
 
 // import all routers
 const indexRouter = require("./routes/index");
@@ -39,6 +41,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// using flash middleware	
+// app.use(express.session());
+// app.use(flash());
+
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
